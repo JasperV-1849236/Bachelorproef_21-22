@@ -25,10 +25,10 @@ m = readline(prompt="sample size:");
 m = as.numeric(m);
 
 correctness_vec = c();
-#loop over meerdere (momenteel 1) pogingen:
+#loop over multiple attempts:
 loops = (1:loopCount);
 for(i in loops){
-	#Make solution function (= rechthoek)
+	#Make solution function (= rectangle)
 	solution_rectangle = list();
 	#get an a < b for every dimension
 	for(dim in 1:dimensions){
@@ -108,25 +108,22 @@ for(i in loops){
 			if(point[dim] < solution_rectangle[[dim]][1] || point[dim] > solution_rectangle[[dim]][2]){
 				inside_solution = FALSE;
 			}
-			#check ERM
+			#check ERM hypothesis
 			if(point[dim] < min[dim] || point[dim] > max[dim]){
 				inside_ERM = FALSE;
 			}
 		}
 		
-		#Add point and label to solution
+		#Check correctness
 		if(inside_solution == inside_ERM){
 			count_equals = count_equals + 1.0;
 		}
 	}
 	correctness_vec = c(correctness_vec, count_equals/checkSamples);
-	
-	#Get more samples and compare solution function with h
-	#Output percentage of being right (>? epsilon) into list
+
 }
 
 #We now calculate how many times our h had a bigger error than epsilon.
-#print(paste0("Correctheid van h:", correctness_vec * 100, "%"));
 score_to_beat = 1.0 - e;
 chance_count = 0.0;
 for(i in correctness_vec){
